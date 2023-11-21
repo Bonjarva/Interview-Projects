@@ -11,6 +11,8 @@ public class Co2Emissions
     //Population, 4659265
     //LifeExpectancy 81.862
 
+    //todo: check data types
+
     public string? Country { get; set; }
 
     public string? Code { get; set; }

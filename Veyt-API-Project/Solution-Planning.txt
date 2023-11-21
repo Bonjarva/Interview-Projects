@@ -18,12 +18,12 @@ The API will have 5 end points as stated in the question:
 1. url/t10CountriesHighCo2PerCapita
     Get request for Top 10 Countries with highest Co2Emissions perCapita
 2. url/co2EmissionYearlyChange
-    POST request, given the list of country codes (Need to check what format the list will come in as in parameter)
+    POST request, given the list of country codes (Need to check what format the list will come in as in parameter and sanitize input)
     return Co2 Emissions and YearlyChange for given countries
 3. url/t10CountriesHighLifeExpectancy
     GET request, returns top 10 countries with highest life expectancy
 4. url/totalEmissions
-    POST request, given the list of country codes (Need to check what format the list will come in as in parameter)
+    POST request, given the list of country codes (Need to check what format the list will come in as in parameter and sanitize input)
     return total emissions
 5.  url/health
     Returns "Healthy" if active
