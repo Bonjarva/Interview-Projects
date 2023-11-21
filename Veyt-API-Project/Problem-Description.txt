@@ -1,0 +1,13 @@
+Build a RESTful API in C# or Rust and deploy it to fly.io (It is free cloud service)
+
+Use the dataset below:
+
+https://github.com/GreenfactAS/co2-dataset
+
+The api should return:
+
+1. Top 10 Countries with highest Co2Emissions perCapita
+2. Return CO2Emissions and YearlyChange given a list of country codes (Ex,: can,lux,est)
+3. Top 10 Countries with highest LifeExpectancy
+4. Total of Emissions given a list of countries codes (Ex,: can,lux,est)
+5. Healthy Check Status - When you execute the application and navigate to /health endpoint, it will return the text “Healthy” as a response assuming that your application is up and running fine.
