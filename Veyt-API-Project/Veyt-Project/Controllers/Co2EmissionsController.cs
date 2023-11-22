@@ -165,12 +165,19 @@ public class Co2EmissionsController : ControllerBase
 
             var records = csv.GetRecords<Co2Emissions>().Where(record => requestedCountryCodes.Contains(record.Code)).ToList();
 
-            var sumCO2Emissions = records.Sum(c => c.CO2Emissions);
-
-            return Ok(new
+            if (records.Any())
             {
-                TotalCO2Emissions = sumCO2Emissions
-            });
+                var sumCO2Emissions = records.Sum(c => c.CO2Emissions);
+
+                return Ok(new
+                {
+                    TotalCO2Emissions = sumCO2Emissions
+                });
+            }
+            else
+            {
+                return NotFound("No matching countries found.");
+            }
 
         }
         catch (Exception ex)
