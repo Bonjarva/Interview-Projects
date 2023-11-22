@@ -1,10 +1,11 @@
 C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\bin\Debug\net7.0\appsettings.Development.json
 C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\bin\Debug\net7.0\appsettings.json
 C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\bin\Debug\net7.0\Veyt-Project.exe
-C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\bin\Debug\net7.0\Veyt-Project.deps.json
-C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\bin\Debug\net7.0\Veyt-Project.runtimeconfig.json
+c:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\bin\Debug\net7.0\Veyt-Project.deps.json
+c:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\bin\Debug\net7.0\Veyt-Project.runtimeconfig.json
 C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\bin\Debug\net7.0\Veyt-Project.dll
 C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\bin\Debug\net7.0\Veyt-Project.pdb
+C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\bin\Debug\net7.0\CsvHelper.dll
 C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\bin\Debug\net7.0\Microsoft.AspNetCore.OpenApi.dll
 C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\bin\Debug\net7.0\Microsoft.OpenApi.dll
 C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
@@ -25,9 +26,9 @@ C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Vey
 C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\obj\Debug\net7.0\staticwebassets.build.json
 C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\obj\Debug\net7.0\staticwebassets.development.json
 C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\obj\Debug\net7.0\scopedcss\bundle\Veyt-Project.styles.css
-C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\obj\Debug\net7.0\Veyt-Project.csproj.CopyComplete
+c:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\obj\Debug\net7.0\Veyt-Project.csproj.CopyComplete
 C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\obj\Debug\net7.0\Veyt-Project.dll
 C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\obj\Debug\net7.0\refint\Veyt-Project.dll
 C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\obj\Debug\net7.0\Veyt-Project.pdb
-C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\obj\Debug\net7.0\Veyt-Project.genruntimeconfig.cache
-C:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\obj\Debug\net7.0\ref\Veyt-Project.dll
+c:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\obj\Debug\net7.0\Veyt-Project.genruntimeconfig.cache
+c:\Users\jaydi\OneDrive\Documents\GitHub\Interview-Projects\Veyt-API-Project\Veyt-Project\obj\Debug\net7.0\ref\Veyt-Project.dll

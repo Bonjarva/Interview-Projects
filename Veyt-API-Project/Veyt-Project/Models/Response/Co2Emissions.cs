@@ -21,7 +21,7 @@ public class Co2Emissions
 
     public float YearlyChange { get; set; }
 
-    public float PerCapita { get; set; }
+    public float Percapita { get; set; }
 
     public long Population { get; set; }
 

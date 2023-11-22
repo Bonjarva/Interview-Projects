@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileSystemGlobbing.Internal.PathSegments;
+using CsvHelper;
+using CsvHelper.Configuration;
+using System.Globalization;
 
 namespace Veyt_Project.Controllers;
 
@@ -21,7 +24,6 @@ public class Co2EmissionsController : ControllerBase
     public IEnumerable<Co2Emissions> Get()
     {
 
-
         //pull data out of the csv file ready for processing
         var lines = System.IO.File.ReadAllLines(_csvPath);
         var data = from line in lines.Skip(1)
@@ -32,14 +34,13 @@ public class Co2EmissionsController : ControllerBase
                        Code = columns[1],
                        CO2Emissions = long.Parse(columns[2]),
                        YearlyChange = float.Parse(columns[3]),
-                       PerCapita = float.Parse(columns[4]),
+                       Percapita = float.Parse(columns[4]),
                        Population = long.Parse(columns[5]),
                        LifeExpectancy = float.Parse(columns[6])
                    };
 
         return data.ToList();
     }
-
 
     [HttpGet("status")]
     public ActionResult<string> GetStatus()
@@ -50,8 +51,88 @@ public class Co2EmissionsController : ControllerBase
             return StatusCode(500, "Input file not found");
         }
 
-
         //if all checks pass send back an OK status message.
         return Ok("OK");
     }
+
+    [HttpGet("top10Percapita")]
+    public IActionResult GetTop10Percapita()
+    {
+
+        try
+        {
+            using var reader = new StreamReader(_csvPath);
+            using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
+            var records = csv.GetRecords<Co2Emissions>().OrderByDescending(r => r.Percapita).Take(10).ToList();
+            return Ok(records);
+
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred: {ex.Message}");
+
+        }
+    }
+
+    [HttpGet("top10LifeExpectancy")]
+    public IActionResult GetTop10LifeExpectancy()
+    {
+
+        try
+        {
+            using var reader = new StreamReader(_csvPath);
+            using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
+            var records = csv.GetRecords<Co2Emissions>().OrderByDescending(r => r.LifeExpectancy).Take(10).ToList();
+            return Ok(records);
+
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred: {ex.Message}");
+
+        }
+    }
+
+
+
+    // 2. url/co2EmissionYearlyChange
+    //     POST request, given the list of country codes (Need to check what format the list will come in as in parameter and sanitize input)
+    //     return Co2 Emissions and YearlyChange for given countries
+    // 2. Return CO2Emissions and YearlyChange given a list of country codes (Ex,: can,lux,est)
+
+    [HttpPost("co2EmissionsAndYearlyChange")]
+    public IActionResult GetCo2EmisisionsAndYearlyChange([FromBody] CountryList request)
+    {
+        try
+        {
+
+            string[] requestedCountryCodes;
+
+            // Get country codes from the request header
+            if (request.Countries != String.Empty)
+            {
+                // Split the comma-separated list of country codes
+                requestedCountryCodes = request.Countries.Split(',');
+                //possibly regex for checking its a 3 letter code separated by an optional comma
+
+            }
+            else
+            {
+                return BadRequest("Country codes not provided in headers.");
+            }
+
+            using var reader = new StreamReader(_csvPath);
+            using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
+
+            var records = csv.GetRecords<Co2Emissions>().Where(record => requestedCountryCodes.Contains(record.Code)).ToList();
+            return Ok(records);
+
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred: {ex.Message}");
+
+        }
+    }
+
 }
