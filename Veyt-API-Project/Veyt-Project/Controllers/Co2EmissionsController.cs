@@ -159,9 +159,10 @@ public class Co2EmissionsController : ControllerBase
             {
                 var sumCO2Emissions = countries.Sum(c => c.CO2Emissions);
 
-                return Ok(new
+
+                return Ok(new TotalCO2Emissions
                 {
-                    TotalCO2Emissions = sumCO2Emissions
+                    TotalEmissions = sumCO2Emissions
                 });
             }
             else
