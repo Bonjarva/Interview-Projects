@@ -122,9 +122,17 @@ public class Co2EmissionsController : ControllerBase
             using var reader = new StreamReader(_csvPath);
             using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
 
-            var records = csv.GetRecords<Co2Emissions>().Where(record => requestedCountryCodes.Contains(record.Code)).ToList();
-            return Ok(records);
+            var countries = csv.GetRecords<Co2EmissionsYearlyChange>().Where(country => requestedCountryCodes.Contains(country.Code)).ToList();
 
+            if (countries.Any())
+            {
+                return Ok(countries);
+
+            }
+            else
+            {
+                return NotFound("No matching countries found.");
+            }
         }
         catch (Exception ex)
         {
