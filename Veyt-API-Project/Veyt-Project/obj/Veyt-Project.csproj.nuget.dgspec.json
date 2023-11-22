@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jaydi\\OneDrive\\Documents\\GitHub\\Interview-Projects\\Veyt-API-Project\\Veyt-Project\\Veyt-Project.csproj": {}
+    "c:\\Users\\jaydi\\OneDrive\\Documents\\GitHub\\Interview-Projects\\Veyt-API-Project\\Veyt-Project\\Veyt-Project.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jaydi\\OneDrive\\Documents\\GitHub\\Interview-Projects\\Veyt-API-Project\\Veyt-Project\\Veyt-Project.csproj": {
+    "c:\\Users\\jaydi\\OneDrive\\Documents\\GitHub\\Interview-Projects\\Veyt-API-Project\\Veyt-Project\\Veyt-Project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jaydi\\OneDrive\\Documents\\GitHub\\Interview-Projects\\Veyt-API-Project\\Veyt-Project\\Veyt-Project.csproj",
+        "projectUniqueName": "c:\\Users\\jaydi\\OneDrive\\Documents\\GitHub\\Interview-Projects\\Veyt-API-Project\\Veyt-Project\\Veyt-Project.csproj",
         "projectName": "Veyt-Project",
-        "projectPath": "C:\\Users\\jaydi\\OneDrive\\Documents\\GitHub\\Interview-Projects\\Veyt-API-Project\\Veyt-Project\\Veyt-Project.csproj",
+        "projectPath": "c:\\Users\\jaydi\\OneDrive\\Documents\\GitHub\\Interview-Projects\\Veyt-API-Project\\Veyt-Project\\Veyt-Project.csproj",
         "packagesPath": "C:\\Users\\jaydi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jaydi\\OneDrive\\Documents\\GitHub\\Interview-Projects\\Veyt-API-Project\\Veyt-Project\\obj\\",
+        "outputPath": "c:\\Users\\jaydi\\OneDrive\\Documents\\GitHub\\Interview-Projects\\Veyt-API-Project\\Veyt-Project\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\jaydi\\AppData\\Roaming\\NuGet\\NuGet.Config"

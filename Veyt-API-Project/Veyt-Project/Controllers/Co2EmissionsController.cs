@@ -135,4 +135,58 @@ public class Co2EmissionsController : ControllerBase
         }
     }
 
+
+    // 4. url/totalEmissions
+    //     POST request, given the list of country codes (Need to check what format the list will come in as in parameter and sanitize input)
+    //     return total emissions
+    [HttpPost("totalCo2Emissions")]
+    public IActionResult GetTotalCo2Emissions([FromBody] CountryList request)
+    {
+        try
+        {
+
+            string[] requestedCountryCodes;
+
+            // Get country codes from the request header
+            if (request.Countries != String.Empty)
+            {
+                // Split the comma-separated list of country codes
+                requestedCountryCodes = request.Countries.Split(',');
+                //possibly regex for checking its a 3 letter code separated by an optional comma
+
+            }
+            else
+            {
+                return BadRequest("Country codes not provided in headers.");
+            }
+
+            using var reader = new StreamReader(_csvPath);
+            using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
+
+            var records = csv.GetRecords<Co2Emissions>().Where(record => requestedCountryCodes.Contains(record.Code)).ToList();
+
+            var sumCO2Emissions = records.Sum(c => c.CO2Emissions);
+
+            return Ok(new
+            {
+                TotalCO2Emissions = sumCO2Emissions
+            });
+
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred: {ex.Message}");
+
+        }
+
+    }
+
 }
+
+
+
+
+
+
+
+
