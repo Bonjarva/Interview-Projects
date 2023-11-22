@@ -91,28 +91,16 @@ public class Co2EmissionsController : ControllerBase
         }
     }
 
-
-
-    // 2. url/co2EmissionYearlyChange
-    //     POST request, given the list of country codes (Need to check what format the list will come in as in parameter and sanitize input)
-    //     return Co2 Emissions and YearlyChange for given countries
-    // 2. Return CO2Emissions and YearlyChange given a list of country codes (Ex,: can,lux,est)
-
     [HttpPost("co2EmissionsAndYearlyChange")]
     public IActionResult GetCo2EmisisionsAndYearlyChange([FromBody] CountryList request)
     {
         try
         {
-
             string[] requestedCountryCodes;
 
-            // Get country codes from the request header
             if (request.Countries != String.Empty)
             {
-                // Split the comma-separated list of country codes
                 requestedCountryCodes = request.Countries.Split(',');
-                //possibly regex for checking its a 3 letter code separated by an optional comma
-
             }
             else
             {
@@ -127,7 +115,6 @@ public class Co2EmissionsController : ControllerBase
             if (countries.Any())
             {
                 return Ok(countries);
-
             }
             else
             {
@@ -137,7 +124,6 @@ public class Co2EmissionsController : ControllerBase
         catch (Exception ex)
         {
             return StatusCode(500, $"An error occurred: {ex.Message}");
-
         }
     }
 
