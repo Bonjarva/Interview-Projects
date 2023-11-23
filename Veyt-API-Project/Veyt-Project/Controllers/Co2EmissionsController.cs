@@ -25,8 +25,6 @@ public class Co2EmissionsController : ControllerBase
         _csvFileRetrievalService = csvFileRetrievalService;
     }
 
-    private readonly string _csvPath = "CO2-emissions.csv";
-
     [HttpGet("status")]
     public async Task<IActionResult> GetStatus()
     {
@@ -38,7 +36,7 @@ public class Co2EmissionsController : ControllerBase
             return BadRequest("CSV content is not available.");
         }
 
-        return Ok();
+        return Ok("CSV content is available for processing.");
     }
 
     [HttpGet("top10Percapita")]
@@ -55,8 +53,8 @@ public class Co2EmissionsController : ControllerBase
 
             using var reader = new StringReader(_csvFileRetrievalService.CsvContent);
             using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
-            var records = csv.GetRecords<Co2Emissions>().OrderByDescending(r => r.Percapita).Take(10).ToList();
-            return Ok(records);
+            var countries = csv.GetRecords<Co2Emissions>().OrderByDescending(country => country.Percapita).Take(10).ToList();
+            return Ok(countries);
 
         }
         catch (Exception ex)
@@ -81,8 +79,8 @@ public class Co2EmissionsController : ControllerBase
 
             using var reader = new StringReader(_csvFileRetrievalService.CsvContent);
             using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
-            var records = csv.GetRecords<Co2Emissions>().OrderByDescending(r => r.LifeExpectancy).Take(10).ToList();
-            return Ok(records);
+            var countries = csv.GetRecords<Co2Emissions>().OrderByDescending(country => country.LifeExpectancy).Take(10).ToList();
+            return Ok(countries);
         }
         catch (Exception ex)
         {
@@ -92,7 +90,7 @@ public class Co2EmissionsController : ControllerBase
     }
 
     [HttpPost("co2EmissionsAndYearlyChange")]
-    public IActionResult GetCo2EmisisionsAndYearlyChange([FromBody] CountryList request)
+    public async Task<IActionResult> GetCo2EmisisionsAndYearlyChange([FromBody] CountryList request)
     {
         try
         {
@@ -107,9 +105,15 @@ public class Co2EmissionsController : ControllerBase
                 return BadRequest("Country codes not provided in headers.");
             }
 
-            using var reader = new StreamReader(_csvPath);
-            using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
+            await _csvFileRetrievalService.StartAsync(new CancellationToken());
 
+            if (string.IsNullOrEmpty(_csvFileRetrievalService.CsvContent))
+            {
+                return BadRequest("CSV content is not available.");
+            }
+
+            using var reader = new StringReader(_csvFileRetrievalService.CsvContent);
+            using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
             var countries = csv.GetRecords<Co2EmissionsYearlyChange>().Where(country => requestedCountryCodes.Contains(country.Code)).ToList();
             if (countries.Any())
             {
@@ -127,7 +131,7 @@ public class Co2EmissionsController : ControllerBase
     }
 
     [HttpPost("totalCo2Emissions")]
-    public IActionResult GetTotalCo2Emissions([FromBody] CountryList request)
+    public async Task<IActionResult> GetTotalCo2Emissions([FromBody] CountryList request)
     {
         try
         {
@@ -143,16 +147,19 @@ public class Co2EmissionsController : ControllerBase
                 return BadRequest("Country codes not provided in headers.");
             }
 
-            using var reader = new StreamReader(_csvPath);
+            await _csvFileRetrievalService.StartAsync(new CancellationToken());
+
+            if (string.IsNullOrEmpty(_csvFileRetrievalService.CsvContent))
+            {
+                return BadRequest("CSV content is not available.");
+            }
+
+            using var reader = new StringReader(_csvFileRetrievalService.CsvContent);
             using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
-
             var countries = csv.GetRecords<Co2Emissions>().Where(country => requestedCountryCodes.Contains(country.Code)).ToList();
-
             if (countries.Any())
             {
                 var sumCO2Emissions = countries.Sum(c => c.CO2Emissions);
-
-
                 return Ok(new TotalCO2Emissions
                 {
                     TotalEmissions = sumCO2Emissions
@@ -162,6 +169,7 @@ public class Co2EmissionsController : ControllerBase
             {
                 return NotFound("No matching countries found.");
             }
+
 
         }
         catch (Exception ex)
