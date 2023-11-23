@@ -54,11 +54,9 @@ public class Co2EmissionsController : ControllerBase
             }
 
             using var reader = new StringReader(_csvFileRetrievalService.CsvContent);
-            using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)))
-            {
-                var records = csv.GetRecords<Co2Emissions>().OrderByDescending(r => r.Percapita).Take(10).ToList();
-                return Ok(records);
-            }
+            using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
+            var records = csv.GetRecords<Co2Emissions>().OrderByDescending(r => r.Percapita).Take(10).ToList();
+            return Ok(records);
 
         }
         catch (Exception ex)
@@ -69,16 +67,22 @@ public class Co2EmissionsController : ControllerBase
     }
 
     [HttpGet("top10LifeExpectancy")]
-    public IActionResult GetTop10LifeExpectancy()
+    public async Task<IActionResult> GetTop10LifeExpectancy()
     {
 
         try
         {
-            using var reader = new StreamReader(_csvPath);
-            using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
-            var records = csv.GetRecords<Top10LifeExpectancy>().OrderByDescending(r => r.LifeExpectancy).Take(10).ToList();
-            return Ok(records);
+            await _csvFileRetrievalService.StartAsync(new CancellationToken());
 
+            if (string.IsNullOrEmpty(_csvFileRetrievalService.CsvContent))
+            {
+                return BadRequest("CSV content is not available.");
+            }
+
+            using var reader = new StringReader(_csvFileRetrievalService.CsvContent);
+            using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
+            var records = csv.GetRecords<Co2Emissions>().OrderByDescending(r => r.LifeExpectancy).Take(10).ToList();
+            return Ok(records);
         }
         catch (Exception ex)
         {
