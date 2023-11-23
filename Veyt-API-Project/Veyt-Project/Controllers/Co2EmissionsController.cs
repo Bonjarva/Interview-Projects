@@ -9,7 +9,6 @@ namespace Veyt_Project.Controllers;
 [Route("[controller]")]
 public class Co2EmissionsController : ControllerBase
 {
-    private readonly string _csvPath = "CO2-emissions.csv";
     //Example csv file data
     //Country, String "New Zealand"
     //Code, "NZL"
@@ -19,49 +18,67 @@ public class Co2EmissionsController : ControllerBase
     //Population, 4659265
     //LifeExpectancy 81.862
 
-    // [HttpGet]
-    // public IActionResult Get()
-    // {
+    private readonly CsvFileRetrievalService _csvFileRetrievalService;
 
-    //     try
-    //     {
-    //         using var reader = new StreamReader(_csvPath);
-    //         using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
-
-    //         var records = csv.GetRecords<Co2Emissions>().ToList();
-    //         return Ok(records);
-
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         return StatusCode(500, $"An error occurred: {ex.Message}");
-
-    //     }
-    // }
-
-    [HttpGet("status")]
-    public ActionResult<string> GetStatus()
+    public Co2EmissionsController(CsvFileRetrievalService csvFileRetrievalService)
     {
-        // Perform health checks here
-        if (!System.IO.File.Exists(_csvPath))
-        {
-            return StatusCode(500, "Input file not found");
-        }
-
-        //if all checks pass send back an OK status message.
-        return Ok("OK");
+        _csvFileRetrievalService = csvFileRetrievalService;
     }
 
-    [HttpGet("top10Percapita")]
-    public IActionResult GetTop10Percapita()
+    private readonly string _csvPath = "CO2-emissions.csv";
+
+    private async Task<ObjectResult> Get1()
+    {
+        await _csvFileRetrievalService.StartAsync(new CancellationToken());
+
+        if (string.IsNullOrEmpty(_csvFileRetrievalService.CsvContent))
+        {
+            return BadRequest("CSV content is not available.");
+        }
+
+        return Ok(_csvFileRetrievalService.CsvContent);
+    }
+
+    [HttpGet("status")]
+    public async Task<IActionResult> GetStatus()
     {
 
+        await _csvFileRetrievalService.StartAsync(new CancellationToken());
+
+        if (string.IsNullOrEmpty(_csvFileRetrievalService.CsvContent))
+        {
+            return BadRequest("CSV content is not available.");
+        }
+
+        return Ok();
+    }
+
+
+
+    // if (!System.IO.File.Exists(_csvPath))
+    // {
+    //     return StatusCode(500, "Input file not found");
+    // }
+
+
+    [HttpGet("top10Percapita")]
+    public async Task<IActionResult> GetTop10Percapita()
+    {
         try
         {
-            using var reader = new StreamReader(_csvPath);
-            using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
-            var records = csv.GetRecords<Top10Percapita>().OrderByDescending(r => r.Percapita).Take(10).ToList();
-            return Ok(records);
+            await _csvFileRetrievalService.StartAsync(new CancellationToken());
+
+            if (string.IsNullOrEmpty(_csvFileRetrievalService.CsvContent))
+            {
+                return BadRequest("CSV content is not available.");
+            }
+
+            using var reader = new StringReader(_csvFileRetrievalService.CsvContent);
+            using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)))
+            {
+                var records = csv.GetRecords<Co2Emissions>().OrderByDescending(r => r.Percapita).Take(10).ToList();
+                return Ok(records);
+            }
 
         }
         catch (Exception ex)

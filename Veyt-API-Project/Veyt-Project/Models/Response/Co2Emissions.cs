@@ -17,13 +17,13 @@ public class Co2Emissions
 
     public long CO2Emissions { get; set; }
 
-    public float YearlyChange { get; set; }
+    public decimal YearlyChange { get; set; }
 
-    public float Percapita { get; set; }
+    public decimal Percapita { get; set; }
 
     public long Population { get; set; }
 
-    public float LifeExpectancy { get; set; }
+    public decimal LifeExpectancy { get; set; }
 
 }
 
