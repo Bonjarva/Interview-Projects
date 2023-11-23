@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.FileSystemGlobbing.Internal.PathSegments;
 using CsvHelper;
 using CsvHelper.Configuration;
 using System.Globalization;
@@ -20,7 +19,7 @@ public class Co2EmissionsController : ControllerBase
     //Population, 4659265
     //LifeExpectancy 81.862
 
-    [HttpGet]
+    // [HttpGet]
     // public IActionResult Get()
     // {
 
