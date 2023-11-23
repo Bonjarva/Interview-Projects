@@ -27,18 +27,6 @@ public class Co2EmissionsController : ControllerBase
 
     private readonly string _csvPath = "CO2-emissions.csv";
 
-    private async Task<ObjectResult> Get1()
-    {
-        await _csvFileRetrievalService.StartAsync(new CancellationToken());
-
-        if (string.IsNullOrEmpty(_csvFileRetrievalService.CsvContent))
-        {
-            return BadRequest("CSV content is not available.");
-        }
-
-        return Ok(_csvFileRetrievalService.CsvContent);
-    }
-
     [HttpGet("status")]
     public async Task<IActionResult> GetStatus()
     {
@@ -52,14 +40,6 @@ public class Co2EmissionsController : ControllerBase
 
         return Ok();
     }
-
-
-
-    // if (!System.IO.File.Exists(_csvPath))
-    // {
-    //     return StatusCode(500, "Input file not found");
-    // }
-
 
     [HttpGet("top10Percapita")]
     public async Task<IActionResult> GetTop10Percapita()
