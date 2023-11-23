@@ -26,3 +26,24 @@ public class Co2Emissions
     public float LifeExpectancy { get; set; }
 
 }
+
+// public class Co2EmissionsYearlyChangeSubset
+// {
+//     public required string Country { get; set; }
+
+//     public required string Code { get; set; }
+
+//     public long CO2Emissions { get; set; }
+
+//     public float YearlyChange { get; set; }
+
+//     public static Co2EmissionsYearlyChangeSubset MapToSubset(Co2Emissions emissions)
+//     {
+//         return new Co2EmissionsYearlyChangeSubset
+//         {
+//             Country = emissions.Country,
+//             Code = emissions.Code,
+//             CO2Emissions = emissions.CO2Emissions
+//         };
+//     }
+// }

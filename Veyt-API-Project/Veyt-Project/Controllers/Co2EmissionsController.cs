@@ -21,24 +21,24 @@ public class Co2EmissionsController : ControllerBase
     //LifeExpectancy 81.862
 
     [HttpGet]
-    public IActionResult Get()
-    {
+    // public IActionResult Get()
+    // {
 
-        try
-        {
-            using var reader = new StreamReader(_csvPath);
-            using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
+    //     try
+    //     {
+    //         using var reader = new StreamReader(_csvPath);
+    //         using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
 
-            var records = csv.GetRecords<Co2Emissions>().ToList();
-            return Ok(records);
+    //         var records = csv.GetRecords<Co2Emissions>().ToList();
+    //         return Ok(records);
 
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"An error occurred: {ex.Message}");
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         return StatusCode(500, $"An error occurred: {ex.Message}");
 
-        }
-    }
+    //     }
+    // }
 
     [HttpGet("status")]
     public ActionResult<string> GetStatus()
@@ -61,7 +61,7 @@ public class Co2EmissionsController : ControllerBase
         {
             using var reader = new StreamReader(_csvPath);
             using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
-            var records = csv.GetRecords<Co2Emissions>().OrderByDescending(r => r.Percapita).Take(10).ToList();
+            var records = csv.GetRecords<Top10Percapita>().OrderByDescending(r => r.Percapita).Take(10).ToList();
             return Ok(records);
 
         }
@@ -80,7 +80,7 @@ public class Co2EmissionsController : ControllerBase
         {
             using var reader = new StreamReader(_csvPath);
             using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
-            var records = csv.GetRecords<Co2Emissions>().OrderByDescending(r => r.LifeExpectancy).Take(10).ToList();
+            var records = csv.GetRecords<Top10LifeExpectancy>().OrderByDescending(r => r.LifeExpectancy).Take(10).ToList();
             return Ok(records);
 
         }
@@ -111,7 +111,6 @@ public class Co2EmissionsController : ControllerBase
             using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
 
             var countries = csv.GetRecords<Co2EmissionsYearlyChange>().Where(country => requestedCountryCodes.Contains(country.Code)).ToList();
-
             if (countries.Any())
             {
                 return Ok(countries);
