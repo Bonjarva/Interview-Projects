@@ -53,7 +53,7 @@ public class Co2EmissionsController : ControllerBase
 
             using var reader = new StringReader(_csvFileRetrievalService.CsvContent);
             using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
-            var countries = csv.GetRecords<Co2Emissions>().OrderByDescending(country => country.Percapita).Take(10).ToList();
+            var countries = csv.GetRecords<Top10Percapita>().OrderByDescending(country => country.Percapita).Take(10).ToList();
             return Ok(countries);
 
         }
@@ -79,7 +79,7 @@ public class Co2EmissionsController : ControllerBase
 
             using var reader = new StringReader(_csvFileRetrievalService.CsvContent);
             using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
-            var countries = csv.GetRecords<Co2Emissions>().OrderByDescending(country => country.LifeExpectancy).Take(10).ToList();
+            var countries = csv.GetRecords<Top10LifeExpectancy>().OrderByDescending(country => country.LifeExpectancy).Take(10).ToList();
             return Ok(countries);
         }
         catch (Exception ex)
@@ -99,7 +99,7 @@ public class Co2EmissionsController : ControllerBase
             if (request.Countries != String.Empty)
             {
                 requestedCountryCodes = request.Countries.Split(',')
-                                .Select(country => country.ToUpper())
+                                .Select(country => country.Trim().ToUpper())
                                 .ToArray();
             }
             else
@@ -143,7 +143,7 @@ public class Co2EmissionsController : ControllerBase
             if (request.Countries != String.Empty)
             {
                 requestedCountryCodes = request.Countries.Split(',')
-                                .Select(country => country.ToUpper())
+                                .Select(country => country.Trim().ToUpper())
                                 .ToArray();
             }
             else
