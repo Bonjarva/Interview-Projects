@@ -25,7 +25,7 @@ public class Co2EmissionsController : ControllerBase
         _csvFileRetrievalService = csvFileRetrievalService;
     }
 
-    [HttpGet("status")]
+    [HttpGet("health")]
     public async Task<IActionResult> GetStatus()
     {
 
@@ -36,7 +36,7 @@ public class Co2EmissionsController : ControllerBase
             return BadRequest("CSV content is not available.");
         }
 
-        return Ok("CSV content is available for processing.");
+        return Ok("Healthy");
     }
 
     [HttpGet("top10Percapita")]
@@ -98,7 +98,9 @@ public class Co2EmissionsController : ControllerBase
 
             if (request.Countries != String.Empty)
             {
-                requestedCountryCodes = request.Countries.Split(',');
+                requestedCountryCodes = request.Countries.Split(',')
+                                .Select(country => country.ToUpper())
+                                .ToArray();
             }
             else
             {
@@ -140,7 +142,9 @@ public class Co2EmissionsController : ControllerBase
 
             if (request.Countries != String.Empty)
             {
-                requestedCountryCodes = request.Countries.Split(',');
+                requestedCountryCodes = request.Countries.Split(',')
+                                .Select(country => country.ToUpper())
+                                .ToArray();
             }
             else
             {
@@ -179,11 +183,3 @@ public class Co2EmissionsController : ControllerBase
         }
     }
 }
-
-
-
-
-
-
-
-
