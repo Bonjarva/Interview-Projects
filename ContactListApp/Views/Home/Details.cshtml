@@ -1,0 +1,20 @@
+@model ContactListApp.Models.Contact
+
+<h1>Contact Details</h1>
+
+<dl>
+    <dt>First Name</dt>
+    <dd>@Model.FirstName</dd>
+
+    <dt>Last Name</dt>
+    <dd>@Model.LastName</dd>
+
+    <dt>Address</dt>
+    <dd>@Model.Address</dd>
+
+    <dt>Phone Number</dt>
+    <dd>@Model.PhoneNumber</dd>
+
+    <dt>Date of Birth</dt>
+    <dd>@Model.DOB.ToShortDateString()</dd>
+</dl>
